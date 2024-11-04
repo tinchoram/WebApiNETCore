@@ -1,0 +1,24 @@
+﻿1) Ejecutar/Abrir ventana "Package Manager Console"
+
+2) Seleccionar el proyecto .Persistance el cual tiene los Modelo (referencia al proyeto .Shared) y el Context
+
+3) Sobre el proyecto Installar los siguientes packages
+Install-Package Microsoft.EntityFrameworkCore
+Install-Package Microsoft.EntityFrameworkCore.Design
+Install-Package Microsoft.EntityFrameworkCore.Tools
+Install-Package Microsoft.EntityFrameworkCore.SqlServer
+Install-Package Microsoft.Extensions.Configuration.FileExtensions
+Install-Package Microsoft.Extensions.Configuration.Json
+
+4) Crea la version inicial de la BD y genera carpeta "Migrations"
+Add-Migration Init
+
+5) Impacta cambios
+Update-Database
+
+6) Para eliminar un cambio/migracion en particular:
+Remove-Migration
+
+7) Para ir migrando cambios en los modelos e impactar en la BD
+7.1) Add-Migration [Nombre de la migracion]
+7.2) Update-Database

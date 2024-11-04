@@ -1,0 +1,6 @@
+@TPInteg.Api_HostAddress = http://localhost:5166
+
+GET {{TPInteg.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
