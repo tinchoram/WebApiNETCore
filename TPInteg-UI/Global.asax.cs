@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+using System.IO;
 using System.Web;
 using System.Web.Optimization;
 using System.Web.Routing;
-using System.Web.Security;
-using System.Web.SessionState;
 
 namespace TPInteg_UI
 {
@@ -13,7 +10,15 @@ namespace TPInteg_UI
     {
         void Application_Start(object sender, EventArgs e)
         {
-            // Code that runs on application startup
+            //Se agregan nuevas rutas
+            RouteTable.Routes.MapPageRoute("ABMProveedores", "ABMProveedores",
+                "~/Pages/Proveedores/Administracion.aspx");
+            RouteTable.Routes.MapPageRoute("ListadoProveedores", "ListadoProveedores",
+                "~/Pages/Proveedores/Listado.aspx");
+            RouteTable.Routes.MapPageRoute("ABMProductos", "ABMProductos",
+                "~/Pages/Productos/Administracion.aspx");
+            RouteTable.Routes.MapPageRoute("ListadoProductos", "ListadoProductos",
+                "~/Pages/Productos/Listado.aspx");
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
         }
