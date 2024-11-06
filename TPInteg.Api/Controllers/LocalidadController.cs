@@ -39,6 +39,8 @@ public class LocalidadController : ControllerBase, ILocalidadRepository
                 return NotFound();
             }
             localidad.Nombre = data.Nombre;
+            localidad.FechaAlta = data.FechaAlta;
+            localidad.FechaBaja = data.FechaBaja;
             await _tPIntegradorDbContext.SaveChangesAsync();
             return Ok(true);
         }
@@ -66,7 +68,7 @@ public class LocalidadController : ControllerBase, ILocalidadRepository
             return BadRequest($"Error creando el registro. Detalle:{ex.Message}");
         }
     }
-    [HttpDelete]
+    [HttpDelete("{id}")]
     [ProducesResponseType(typeof(int), 200)]
     [ProducesResponseType(typeof(int), 400)]
     [ProducesResponseType(typeof(int), 404)]
@@ -84,9 +86,9 @@ public class LocalidadController : ControllerBase, ILocalidadRepository
                 return NotFound();
             }
             //BAJA FISICA
-            //_tPIntegradorDbContext.Localidad.Remove(localidad);
+            _tPIntegradorDbContext.Localidad.Remove(localidad);
             //BAJA LOGICA
-            localidad.FechaBaja = DateOnly.FromDateTime(DateTime.Now);
+            //localidad.FechaBaja = DateOnly.FromDateTime(DateTime.Now);
             await _tPIntegradorDbContext.SaveChangesAsync();            
 
             return Ok(true);
