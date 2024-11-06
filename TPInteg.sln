@@ -10,6 +10,9 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TPInteg.Persistance", "TPInteg.Persistance\TPInteg.Persistance.csproj", "{8E9B458F-D387-40F8-B74F-22C7DF29E4EA}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TPInteg-UI", "TPInteg-UI\TPInteg-UI.csproj", "{5559C057-0413-4899-A6CE-0F45C4837DCE}"
+	ProjectSection(ProjectDependencies) = postProject
+		{29A294DA-FDAD-42E4-86F7-B7A665CE7BD4} = {29A294DA-FDAD-42E4-86F7-B7A665CE7BD4}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
