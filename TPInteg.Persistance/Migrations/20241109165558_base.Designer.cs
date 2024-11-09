@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TPInteg.Persistance;
 
@@ -11,9 +12,11 @@ using TPInteg.Persistance;
 namespace TPInteg.Persistance.Migrations
 {
     [DbContext(typeof(TPIntegradorDbContext))]
-    partial class TPIntegradorDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241109165558_base")]
+    partial class @base
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -74,8 +77,8 @@ namespace TPInteg.Persistance.Migrations
                     b.Property<DateOnly?>("FechaBaja")
                         .HasColumnType("date");
 
-                    b.Property<double>("PrecioUnitario")
-                        .HasColumnType("float");
+                    b.Property<decimal>("PrecioUnitario")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<int>("ProveedorId")
                         .HasColumnType("int");

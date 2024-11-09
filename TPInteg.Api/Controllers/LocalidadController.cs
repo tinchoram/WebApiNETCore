@@ -1,8 +1,6 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Swashbuckle.AspNetCore.Annotations;
-using TPInteg.Api.Repositories;
 using TPInteg.Persistance;
 using TPInteg.Shared;
 
@@ -11,186 +9,141 @@ namespace TPInteg.Api.Controllers;
 [ApiController]
 [Route("api/[controller]")]
 [Produces("application/json")]
-public class LocalidadController : ControllerBase, ILocalidadRepository
+public class LocalidadController : ControllerBase
 {
-    private readonly ILogger<ProveedorController> _logger;
-    private readonly TPIntegradorDbContext _tPIntegradorDbContext;
-    public LocalidadController(ILogger<ProveedorController> logger, TPIntegradorDbContext tPIntegradorDbContext)
+    private readonly TPIntegradorDbContext _context;
+    private readonly ILogger<LocalidadController> _logger;
+
+    public LocalidadController(TPIntegradorDbContext context, ILogger<LocalidadController> logger)
     {
+        _context = context;
         _logger = logger;
-        _tPIntegradorDbContext = tPIntegradorDbContext;
     }
 
-    [HttpPatch]
-    [ProducesResponseType(typeof(bool), 204)]
-    [ProducesResponseType(typeof(int), 400)]
-    [ProducesResponseType(typeof(int), 404)]
-    [EndpointDescription("Recibe un localidad para actualizar")]
-    [SwaggerOperation(Summary = "Actualizar un localidad de manera parcial")]
-    public async Task<IActionResult> Actualizar([FromBody] Localidad data)
-    {
-        try
-        {
-            var localidadId = data.Id;
-            var localidad = await _tPIntegradorDbContext.Localidad
-                .FirstOrDefaultAsync(x => x.Id == localidadId);
-            if (localidad == null)
-            {
-                return NotFound();
-            }
-            localidad.Nombre = data.Nombre;
-            localidad.FechaAlta = data.FechaAlta;
-            localidad.FechaBaja = data.FechaBaja;
-            await _tPIntegradorDbContext.SaveChangesAsync();
-            return Ok(true);
-        }
-        catch (Exception ex)
-        {
-            return BadRequest($"Error actualizando el registro. Detalle:{ex.Message}");
-        }
-    }
     [HttpPost]
-    [ProducesResponseType(typeof(int), 201)]
-    [ProducesResponseType(typeof(int), 400)]
-    [ProducesResponseType(typeof(int), 409)]
-    [EndpointDescription("Recibe un localidad para crear")]
-    [SwaggerOperation(Summary = "Crear nuevo localidad")]
-    public async Task<IActionResult> Crear([FromBody] Localidad data)
+    [ProducesResponseType(typeof(Localidad), 201)]
+    [ProducesResponseType(400)]
+    [SwaggerOperation(Summary = "Crear nueva localidad")]
+    public async Task<IActionResult> Crear([FromBody] Localidad localidad)
     {
-        try
+        if (!ModelState.IsValid)
         {
-            var nuevaLocalidad = await _tPIntegradorDbContext.Localidad.AddAsync(data);
-            await _tPIntegradorDbContext.SaveChangesAsync();
-            return Ok(nuevaLocalidad.Entity.Id);
+            return BadRequest(ModelState);
         }
-        catch (Exception ex)
-        {
-            return BadRequest($"Error creando el registro. Detalle:{ex.Message}");
-        }
-    }
-    [HttpDelete("{id}")]
-    [ProducesResponseType(typeof(int), 200)]
-    [ProducesResponseType(typeof(int), 400)]
-    [ProducesResponseType(typeof(int), 404)]
-    [EndpointDescription("Recibe un Id de localidad para eliminar")]
-    [SwaggerOperation(Summary = "Eliminar un localidad de manera lógica")]
-    public async Task<IActionResult> Eliminar(int id)
-    {
-        try
-        {
-            var localidadId = id;
-            var localidad = await _tPIntegradorDbContext.Localidad
-                .FirstOrDefaultAsync(x => x.Id == localidadId);
-            if (localidad == null)
-            {
-                return NotFound();
-            }
-            //BAJA FISICA
-            _tPIntegradorDbContext.Localidad.Remove(localidad);
-            //BAJA LOGICA
-            //localidad.FechaBaja = DateOnly.FromDateTime(DateTime.Now);
-            await _tPIntegradorDbContext.SaveChangesAsync();            
 
-            return Ok(true);
+        try
+        {
+            _context.Localidad.Add(localidad);
+            await _context.SaveChangesAsync();
+            return CreatedAtAction(nameof(TraerPorId), new { id = localidad.Id }, localidad);
         }
         catch (Exception ex)
         {
-            return BadRequest($"Error eliminando el registro. Detalle:{ex.Message}");
+            _logger.LogError(ex, "Error al crear la localidad.");
+            return BadRequest($"Error creando el registro. Detalle: {ex.Message}");
         }
     }
-    [HttpGet("TraerPorId/{id}")]
+
+    [HttpGet("{id}")]
     [ProducesResponseType(typeof(Localidad), 200)]
-    [ProducesResponseType(typeof(int), 400)]
-    [ProducesResponseType(typeof(int), 404)]
-    [EndpointDescription("Obtener datos de un localidad por su ID")]
-    [SwaggerOperation(Summary = "Traer un localidad por ID")]
+    [ProducesResponseType(404)]
+    [SwaggerOperation(Summary = "Traer una localidad por ID")]
     public async Task<IActionResult> TraerPorId(int id)
     {
-        try
-        {
-            var localidad = await _tPIntegradorDbContext.Localidad
-                .FirstOrDefaultAsync(x => x.Id == id);
-            if (localidad == null) 
-            {
-                return NotFound();
-            }
-            return Ok(localidad);
-        }
-        catch (Exception ex)
-        {
-            return BadRequest($"Error devolviendo el registro. Detalle:{ex.Message}");
-        }
+        var localidad = await _context.Localidad.FindAsync(id);
+        return localidad == null ? NotFound() : Ok(localidad);
     }
-    [HttpGet("TraerPorNombre/{nombre}")]
+
+    [HttpGet("nombre/{name}")]
     [ProducesResponseType(typeof(List<Localidad>), 200)]
-    [ProducesResponseType(typeof(int), 400)]
-    [ProducesResponseType(typeof(int), 404)]
-    [EndpointDescription("Obtener datos de las localidades que contengan un Nombre")]
+    [ProducesResponseType(404)]
     [SwaggerOperation(Summary = "Traer localidades por Nombre")]
-    public async Task<IActionResult> TraerPorNombre(string nombre)
+    public async Task<IActionResult> TraerPorNombre(string name)
     {
-        try
+        var localidades = await _context.Localidad
+            .Where(l => l.Nombre.Contains(name))
+            .ToListAsync();
+
+        if (!localidades.Any())
         {
-            var listaLocalidades = await _tPIntegradorDbContext.Localidad
-                .Where(x => x.Nombre.Contains(nombre)).ToListAsync();
-            if (listaLocalidades is null)
-            {
-                return NotFound();
-            }
-            return Ok(listaLocalidades);
+            return NotFound(new { message = $"No se encontraron localidades con el nombre '{name}'." });
         }
-        catch (Exception ex)
-        {
-            return BadRequest($"Error devolviendo el registro. Detalle:{ex.Message}");
-        }
+
+        return Ok(localidades);
     }
-    [HttpGet("TraerTodos")]
+
+    [HttpGet]
     [ProducesResponseType(typeof(List<Localidad>), 200)]
-    [ProducesResponseType(typeof(int), 400)]
-    [ProducesResponseType(typeof(int), 404)]
-    [EndpointDescription("Obtener datos de todos las localidades")]
+    [ProducesResponseType(404)]
     [SwaggerOperation(Summary = "Traer todas las localidades")]
-    //[Authorize(Roles = "Usuario")]
     public async Task<IActionResult> TraerTodos()
     {
+        var localidades = await _context.Localidad.ToListAsync();
+        if (!localidades.Any())
+        {
+            return NotFound(new { message = "No se encontraron localidades registradas." });
+        }
+
+        return Ok(localidades);
+    }
+
+    [HttpPatch("{id}")]
+    [ProducesResponseType(204)]
+    [ProducesResponseType(404)]
+    [ProducesResponseType(400)]
+    [SwaggerOperation(Summary = "Actualizar una localidad")]
+    public async Task<IActionResult> Actualizar(int id, [FromBody] Localidad data)
+    {
+        if (!ModelState.IsValid)
+        {
+            return BadRequest(ModelState);
+        }
+
+        var localidad = await _context.Localidad.FindAsync(id);
+        if (localidad == null)
+        {
+            return NotFound(new { message = $"La localidad con ID {id} no fue encontrada." });
+        }
+
         try
         {
-            var listaLocalidades = await _tPIntegradorDbContext.Localidad.ToListAsync();
-            if (listaLocalidades is null)
-            {
-                return NotFound();
-            }
-            return Ok(listaLocalidades);
+            localidad.Nombre = data.Nombre;
+            localidad.CodigoPostal = data.CodigoPostal;
+            localidad.FechaAlta = data.FechaAlta;
+            localidad.FechaBaja = data.FechaBaja;
+
+            await _context.SaveChangesAsync();
+            return NoContent();
         }
         catch (Exception ex)
         {
-            return BadRequest($"Error devolviendo el registro. Detalle:{ex.Message}");
+            _logger.LogError(ex, $"Error al actualizar la localidad con ID {id}.");
+            return BadRequest($"Error actualizando el registro. Detalle: {ex.Message}");
         }
     }
-    [HttpPut("ActualizarFullLocalidad")]
-    [ProducesResponseType(typeof(bool), 204)]
-    [ProducesResponseType(typeof(int), 400)]
-    [ProducesResponseType(typeof(int), 404)]
-    [EndpointDescription("Recibe una localidad para actualizar")]
-    [SwaggerOperation(Summary = "Actualiza una localidad de manera completa")]
-    public async Task<IActionResult> ActualizarFullLocalidad([FromBody] Localidad data) 
+
+    [HttpDelete("{id}")]
+    [ProducesResponseType(204)]
+    [ProducesResponseType(404)]
+    [SwaggerOperation(Summary = "Eliminar una localidad")]
+    public async Task<IActionResult> Eliminar(int id)
     {
+        var localidad = await _context.Localidad.FindAsync(id);
+        if (localidad == null)
+        {
+            return NotFound(new { message = $"La localidad con ID {id} no fue encontrada." });
+        }
+
         try
         {
-            var localidadId = data.Id;
-            var localidad = await _tPIntegradorDbContext.Localidad
-                .FirstOrDefaultAsync(x => x.Id == localidadId);
-            if (localidad == null)
-            {
-                return NotFound();
-            }
-            localidad.Nombre = data.Nombre;
-            await _tPIntegradorDbContext.SaveChangesAsync();
-            return Ok(true);
+            _context.Localidad.Remove(localidad);
+            await _context.SaveChangesAsync();
+            return NoContent();
         }
         catch (Exception ex)
         {
-            return BadRequest($"Error actualizando el registro. Detalle:{ex.Message}");
+            _logger.LogError(ex, $"Error al eliminar la localidad con ID {id}.");
+            return BadRequest($"Error eliminando el registro. Detalle: {ex.Message}");
         }
     }
 }

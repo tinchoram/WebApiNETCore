@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TPInteg.Persistance;
 
@@ -11,9 +12,11 @@ using TPInteg.Persistance;
 namespace TPInteg.Persistance.Migrations
 {
     [DbContext(typeof(TPIntegradorDbContext))]
-    partial class TPIntegradorDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241109180956_base-002")]
+    partial class base002
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
