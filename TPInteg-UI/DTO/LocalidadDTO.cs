@@ -1,13 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 namespace TPInteg_UI.DTO
 {
     public class LocalidadDTO
     {
-        public int Id { get; set; }
-        public string Nombre { get; set; }
+        public int id { get; set; }
+        public string nombre { get; set; }
+        public int codigoPostal { get; set; }
+        public DateTime? fechaAlta { get; set; }
+        public DateTime? fechaBaja { get; set; }
     }
 }

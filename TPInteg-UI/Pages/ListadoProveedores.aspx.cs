@@ -1,35 +1,26 @@
-﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Net.Http;
+﻿using System;
 using System.Threading.Tasks;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using TPInteg_UI.DTO;
+using TPInteg_UI.Services;
 
-namespace TPInteg_UI
+namespace TPInteg_UI.Pages
 {
     public partial class ListadoProveedores : Page
     {
-        private static readonly HttpClient httpClient;
-        private const string API_BASE_URL = "https://localhost:7176/api/";
-
-        // Control declarations
         protected UpdateProgress UpdateProgress1;
+        protected UpdatePanel UpdatePanel1;
         protected Panel PanelError;
         protected Panel NoDataPanel;
         protected GridView GridViewProveedores;
         protected Label LabelError;
         protected Button ButtonReintentar;
-        protected UpdatePanel UpdatePanel1;
 
-        static ListadoProveedores()
+        private readonly ProveedorService _proveedorService;
+
+        public ListadoProveedores()
         {
-            httpClient = new HttpClient
-            {
-                BaseAddress = new Uri(API_BASE_URL),
-                Timeout = TimeSpan.FromSeconds(30)
-            };
+            _proveedorService = new ProveedorService();
         }
 
         protected void Page_Load(object sender, EventArgs e)
@@ -37,64 +28,6 @@ namespace TPInteg_UI
             if (!IsPostBack)
             {
                 RegisterAsyncTask(new PageAsyncTask(LoadProveedoresAsync));
-            }
-        }
-
-        private async Task LoadProveedoresAsync()
-        {
-            try
-            {
-                ShowLoading(true);
-                ShowError(false, string.Empty);
-                ShowNoData(false);
-
-                var response = await httpClient.GetAsync("Proveedor");
-                var jsonString = await response.Content.ReadAsStringAsync();
-
-                if (response.IsSuccessStatusCode)
-                {
-                    try
-                    {
-                        var proveedores = JsonConvert.DeserializeObject<List<ProveedorDTO>>(jsonString);
-
-                        if (proveedores != null && proveedores.Count > 0)
-                        {
-                            GridViewProveedores.DataSource = proveedores;
-                            GridViewProveedores.DataBind();
-                            GridViewProveedores.Visible = true;
-                            ShowNoData(false);
-                        }
-                        else
-                        {
-                            GridViewProveedores.Visible = false;
-                            ShowNoData(true);
-                        }
-                    }
-                    catch (JsonSerializationException ex)
-                    {
-                        ShowError(true, $"Error al procesar los datos: {ex.Message}");
-                        LogError("Error de deserialización", ex);
-                    }
-                }
-                else
-                {
-                    ShowError(true, $"Error del servidor: {response.StatusCode}");
-                    LogError("Error de API", null, $"Status: {response.StatusCode}, Content: {jsonString}");
-                }
-            }
-            catch (HttpRequestException ex)
-            {
-                ShowError(true, "Error de conexión con el servidor. Por favor, verifique su conexión e intente nuevamente.");
-                LogError("Error de conexión HTTP", ex);
-            }
-            catch (Exception ex)
-            {
-                ShowError(true, "Ha ocurrido un error inesperado. Por favor, intente nuevamente más tarde.");
-                LogError("Error general", ex);
-            }
-            finally
-            {
-                ShowLoading(false);
             }
         }
 
@@ -116,19 +49,50 @@ namespace TPInteg_UI
                 GridViewProveedores.Visible = !show;
         }
 
-        private void ShowNoData(bool show)
+        private async Task LoadProveedoresAsync()
         {
-            if (NoDataPanel != null)
-                NoDataPanel.Visible = show;
-        }
+            try
+            {
+                ShowLoading(true);
+                ShowError(false, string.Empty);
 
-        private void LogError(string tipo, Exception ex = null, string detalles = null)
-        {
-            System.Diagnostics.Debug.WriteLine($"Error: {tipo}");
-            if (ex != null)
-                System.Diagnostics.Debug.WriteLine($"Exception: {ex.Message}\nStack: {ex.StackTrace}");
-            if (detalles != null)
-                System.Diagnostics.Debug.WriteLine($"Detalles: {detalles}");
+                var result = await _proveedorService.GetProveedoresAsync();
+
+                if (result.Success)
+                {
+                    if (result.Data != null && result.Data.Count > 0)
+                    {
+                        if (GridViewProveedores != null)
+                        {
+                            GridViewProveedores.DataSource = result.Data;
+                            GridViewProveedores.DataBind();
+                            GridViewProveedores.Visible = true;
+                        }
+                        if (NoDataPanel != null)
+                            NoDataPanel.Visible = false;
+                    }
+                    else
+                    {
+                        if (GridViewProveedores != null)
+                            GridViewProveedores.Visible = false;
+                        if (NoDataPanel != null)
+                            NoDataPanel.Visible = true;
+                    }
+                }
+                else
+                {
+                    ShowError(true, result.Message);
+                }
+            }
+            catch (Exception ex)
+            {
+                ShowError(true, "Ha ocurrido un error inesperado. Por favor, intente nuevamente más tarde.");
+                System.Diagnostics.Debug.WriteLine($"Error: {ex.Message}");
+            }
+            finally
+            {
+                ShowLoading(false);
+            }
         }
 
         protected void ButtonReintentar_Click(object sender, EventArgs e)
@@ -136,6 +100,4 @@ namespace TPInteg_UI
             RegisterAsyncTask(new PageAsyncTask(LoadProveedoresAsync));
         }
     }
-
-    
 }

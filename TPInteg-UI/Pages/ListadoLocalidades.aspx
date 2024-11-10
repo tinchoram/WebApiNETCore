@@ -30,27 +30,15 @@
                             EmptyDataText="No se encontraron localidades."
                             EmptyDataCssClass="alert alert-info text-center">
                             <Columns>
-                                <asp:BoundField DataField="id" HeaderText="ID" />
+                                <asp:BoundField DataField="Id" HeaderText="ID" />
                                 <asp:TemplateField HeaderText="Nombre">
                                     <ItemTemplate>
-                                        <%# string.IsNullOrEmpty(Eval("nombre").ToString()) ? "-" : Eval("nombre") %>
+                                        <%# string.IsNullOrEmpty(Eval("Nombre").ToString()) ? "-" : Eval("Nombre") %>
                                     </ItemTemplate>
                                 </asp:TemplateField>
                                 <asp:TemplateField HeaderText="Código Postal">
                                     <ItemTemplate>
-                                        <%# Eval("codigoPostal").ToString() != "0" ? Eval("codigoPostal").ToString() : "-" %>
-                                    </ItemTemplate>
-                                </asp:TemplateField>
-                                <asp:TemplateField HeaderText="Estado">
-                                    <ItemTemplate>
-                                        <span class='<%# Eval("fechaBaja") == null ? "estado-badge estado-activo" : "estado-badge estado-inactivo" %>'>
-                                            <%# Eval("fechaBaja") == null ? "Activo" : "Inactivo" %>
-                                        </span>
-                                    </ItemTemplate>
-                                </asp:TemplateField>
-                                <asp:TemplateField HeaderText="Fecha Alta">
-                                    <ItemTemplate>
-                                        <%# Eval("fechaAlta") != null ? Convert.ToDateTime(Eval("fechaAlta")).ToString("dd/MM/yyyy") : "-" %>
+                                        <%# Eval("CodigoPostal") != null ? Eval("CodigoPostal").ToString() : "-" %>
                                     </ItemTemplate>
                                 </asp:TemplateField>
                             </Columns>

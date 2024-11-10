@@ -11,7 +11,7 @@ namespace TPInteg_UI.Pages
 {
 
 
-    public partial class ListadoProveedores
+    public partial class ListadoLocalidades
     {
     }
 }
