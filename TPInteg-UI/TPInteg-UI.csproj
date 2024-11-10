@@ -45,17 +45,39 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Newtonsoft.Json.Bson, Version=1.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.Bson.1.0.2\lib\net45\Newtonsoft.Json.Bson.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
+    </Reference>
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Memory, Version=4.0.1.2, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Memory.4.5.5\lib\net461\System.Memory.dll</HintPath>
+    </Reference>
     <Reference Include="System.Net.Http">
       <HintPath>..\..\..\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\System.Net.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http.Formatting, Version=6.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.6.0.0\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Numerics.Vectors, Version=4.1.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Numerics.Vectors.4.5.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
     </Reference>
     <Reference Include="System.Runtime, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Runtime.4.3.0\lib\net462\System.Runtime.dll</HintPath>
       <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.4.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.4.5.3\lib\net461\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Threading.Tasks.Extensions.4.5.4\lib\net461\System.Threading.Tasks.Extensions.dll</HintPath>
     </Reference>
     <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Xml.Linq" />
@@ -107,7 +129,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="About.aspx" />
-    <Content Include="Contact.aspx" />
     <Content Include="Content\bootstrap-grid.css" />
     <Content Include="Content\bootstrap-grid.min.css" />
     <Content Include="Content\bootstrap-grid.rtl.css" />
@@ -125,13 +146,15 @@
     <Content Include="Content\bootstrap.rtl.css" />
     <Content Include="Content\bootstrap.rtl.min.css" />
     <Content Include="Content\Site.css" />
+    <Content Include="Controls\SearchControl.ascx" />
     <Content Include="Default.aspx" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
-    <Content Include="Pages\Productos\Administracion.aspx" />
-    <Content Include="Pages\Productos\Listado.aspx" />
-    <Content Include="Pages\Proveedores\Administracion.aspx" />
-    <Content Include="Pages\Proveedores\Listado.aspx" />
+    <Content Include="Pages\ABMProductos.aspx" />
+    <Content Include="Pages\ABMProveedores.aspx" />
+    <Content Include="Pages\Contact.aspx" />
+    <Content Include="Pages\ListadoProductos.aspx" />
+    <Content Include="Pages\ListadoProveedores.aspx" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.esm.js" />
@@ -160,11 +183,11 @@
     <Content Include="Content\bootstrap-grid.rtl.css.map" />
     <Content Include="Content\bootstrap-grid.min.css.map" />
     <Content Include="Content\bootstrap-grid.css.map" />
-    <None Include="Scripts\jquery-3.7.0.intellisense.js" />
-    <Content Include="Scripts\jquery-3.7.0.js" />
-    <Content Include="Scripts\jquery-3.7.0.min.js" />
-    <Content Include="Scripts\jquery-3.7.0.slim.js" />
-    <Content Include="Scripts\jquery-3.7.0.slim.min.js" />
+    <None Include="Scripts\jquery-3.7.1.intellisense.js" />
+    <Content Include="Scripts\jquery-3.7.1.js" />
+    <Content Include="Scripts\jquery-3.7.1.min.js" />
+    <Content Include="Scripts\jquery-3.7.1.slim.js" />
+    <Content Include="Scripts\jquery-3.7.1.slim.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\WebForms\DetailsView.js" />
     <Content Include="Scripts\WebForms\Focus.js" />
@@ -204,12 +227,12 @@
     </Compile>
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Client.cs" />
-    <Compile Include="Contact.aspx.cs">
-      <DependentUpon>Contact.aspx</DependentUpon>
+    <Compile Include="Controls\SearchControl.ascx.cs">
+      <DependentUpon>SearchControl.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Contact.aspx.designer.cs">
-      <DependentUpon>Contact.aspx</DependentUpon>
+    <Compile Include="Controls\SearchControl.ascx.designer.cs">
+      <DependentUpon>SearchControl.ascx</DependentUpon>
     </Compile>
     <Compile Include="Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>
@@ -219,39 +242,48 @@
       <DependentUpon>Default.aspx</DependentUpon>
     </Compile>
     <Compile Include="DTO\LocalidadDTO.cs" />
+    <Compile Include="DTO\Proveedor.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Pages\Productos\Administracion.aspx.cs">
-      <DependentUpon>Administracion.aspx</DependentUpon>
+    <Compile Include="Pages\ABMProductos.aspx.cs">
+      <DependentUpon>ABMProductos.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Pages\Productos\Administracion.aspx.designer.cs">
-      <DependentUpon>Administracion.aspx</DependentUpon>
+    <Compile Include="Pages\ABMProductos.aspx.designer.cs">
+      <DependentUpon>ABMProductos.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Pages\Productos\Listado.aspx.cs">
-      <DependentUpon>Listado.aspx</DependentUpon>
+    <Compile Include="Pages\ABMProveedores.aspx.cs">
+      <DependentUpon>ABMProveedores.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Pages\Productos\Listado.aspx.designer.cs">
-      <DependentUpon>Listado.aspx</DependentUpon>
+    <Compile Include="Pages\ABMProveedores.aspx.designer.cs">
+      <DependentUpon>ABMProveedores.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Pages\Proveedores\Administracion.aspx.cs">
-      <DependentUpon>Administracion.aspx</DependentUpon>
+    <Compile Include="Pages\Contact.aspx.cs">
+      <DependentUpon>Contact.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Pages\Proveedores\Administracion.aspx.designer.cs">
-      <DependentUpon>Administracion.aspx</DependentUpon>
+    <Compile Include="Pages\Contact.aspx.designer.cs">
+      <DependentUpon>Contact.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Pages\Proveedores\Listado.aspx.cs">
-      <DependentUpon>Listado.aspx</DependentUpon>
+    <Compile Include="Pages\ListadoProductos.aspx.cs">
+      <DependentUpon>ListadoProductos.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Pages\Proveedores\Listado.aspx.designer.cs">
-      <DependentUpon>Listado.aspx</DependentUpon>
+    <Compile Include="Pages\ListadoProductos.aspx.designer.cs">
+      <DependentUpon>ListadoProductos.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\ListadoProveedores.aspx.cs">
+      <DependentUpon>ListadoProveedores.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\ListadoProveedores.aspx.designer.cs">
+      <DependentUpon>ListadoProveedores.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\LocalidadService.cs" />
+    <Compile Include="Services\ProveedorService.cs" />
     <Compile Include="Services\WebAPICoreService.cs" />
     <Compile Include="Site.Master.cs">
       <DependentUpon>Site.Master</DependentUpon>
@@ -280,8 +312,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    <Content Include="Scripts\jquery-3.7.0.slim.min.map" />
-    <Content Include="Scripts\jquery-3.7.0.min.map" />
+    <Content Include="Scripts\jquery-3.7.1.slim.min.map" />
+    <Content Include="Scripts\jquery-3.7.1.min.map" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

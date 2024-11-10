@@ -7,11 +7,20 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace TPInteg_UI.Pages.Productos
+namespace TPInteg_UI
 {
 
 
-    public partial class Administracion
+    public partial class ListadoProductos
     {
+
+        /// <summary>
+        /// gvProductos control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView gvProductos;
     }
 }

@@ -1,105 +1,359 @@
-﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site.master.cs" Inherits="TPInteg_UI.SiteMaster" %>
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site.Master.cs" Inherits="TPInteg_UI.SiteMaster" %>
 
 <!DOCTYPE html>
-
 <html lang="en">
 <head runat="server">
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title><%: Page.Title %> - TP Integración WebForms - Grupo 3</title>
 
+    <%-- Referencias a CSS locales --%>
     <asp:PlaceHolder runat="server">
-        <%: Scripts.Render("~/bundles/modernizr") %>
+        <link href="~/Content/bootstrap.min.css" rel="stylesheet" runat="server" />
+        <link href="~/Content/Site.css" rel="stylesheet" runat="server" />
     </asp:PlaceHolder>
 
-    <webopt:BundleReference runat="server" Path="~/Content/css" />
-    <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <style>
+        /* Estilos base */
+        :root {
+            --sidebar-width: 280px;
+            --primary-color: #1a237e;
+            --secondary-color: #303f9f;
+            --success-color: #2e7d32;
+            --danger-color: #c62828;
+            --background-color: #f0f2f5;
+            --card-shadow: 0 2px 12px rgba(0,0,0,0.08);
+            --transition-speed: 0.3s;
+        }
 
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            min-height: 100vh;
+            margin: 0;
+            padding: 0;
+            background-color: var(--background-color);
+            color: #333;
+        }
+
+        /* Layout principal */
+        .main-container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: var(--sidebar-width);
+            background: linear-gradient(180deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            color: white;
+            padding: 2rem 1rem;
+            position: fixed;
+            height: 100vh;
+            left: 0;
+            top: 0;
+            box-shadow: 4px 0 10px rgba(0,0,0,0.1);
+            z-index: 1000;
+            overflow-y: auto;
+        }
+
+        .sidebar::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .sidebar::-webkit-scrollbar-thumb {
+            background-color: rgba(255,255,255,0.2);
+            border-radius: 3px;
+        }
+
+        .sidebar h3 {
+            margin-bottom: 2rem;
+            font-weight: 600;
+            font-size: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        /* Navegación */
+        .nav-item {
+            margin: 0.75rem 0;
+        }
+
+        .nav-link {
+            color: rgba(255,255,255,0.9) !important;
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            transition: all var(--transition-speed) ease;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+        }
+
+        .nav-link:hover {
+            background-color: rgba(255,255,255,0.15);
+            transform: translateX(8px);
+            color: white !important;
+        }
+
+        .nav-link i {
+            margin-right: 12px;
+            width: 24px;
+            text-align: center;
+            font-size: 1.2rem;
+        }
+
+        /* Contenido principal */
+        .content-wrapper {
+            flex: 1;
+            margin-left: var(--sidebar-width);
+            padding: 2rem;
+            background-color: var(--background-color);
+            min-height: 100vh;
+        }
+
+        /* Cards */
+        .card {
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: var(--card-shadow);
+            border: none;
+            margin-bottom: 2rem;
+            transition: transform var(--transition-speed) ease;
+        }
+
+        .card:hover {
+            transform: translateY(-2px);
+        }
+
+        .card-header {
+            background-color: white;
+            border-bottom: 1px solid #e9ecef;
+            padding: 1.5rem;
+            border-radius: 12px 12px 0 0 !important;
+        }
+
+        .card-body {
+            padding: 1.5rem;
+        }
+
+        /* Tablas */
+        .table-responsive {
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .table {
+            margin-bottom: 0;
+            background-color: white;
+            border-collapse: separate;
+            border-spacing: 0;
+        }
+
+        .table th {
+            background-color: #f8f9fa;
+            padding: 1rem;
+            font-weight: 600;
+            color: #2c3e50;
+            border-bottom: 2px solid #e9ecef;
+            white-space: nowrap;
+        }
+
+        .table td {
+            padding: 1rem;
+            vertical-align: middle;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        .table tbody tr:hover {
+            background-color: #f8f9fa;
+        }
+
+        /* Estado badges */
+        .estado-badge {
+            display: inline-block;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-weight: 500;
+            font-size: 0.875rem;
+            text-align: center;
+            min-width: 100px;
+            transition: all var(--transition-speed) ease;
+        }
+
+        .estado-activo {
+            background-color: #e8f5e9;
+            color: var(--success-color);
+            border: 1px solid #a5d6a7;
+        }
+
+        .estado-inactivo {
+            background-color: #ffebee;
+            color: var(--danger-color);
+            border: 1px solid #ef9a9a;
+        }
+
+        /* Botones */
+        .btn {
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            font-weight: 500;
+            transition: all var(--transition-speed) ease;
+        }
+
+        .btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        /* Formularios */
+        .form-control {
+            border-radius: 6px;
+            border: 1px solid #ced4da;
+            padding: 0.5rem 1rem;
+            transition: all var(--transition-speed) ease;
+        }
+
+        .form-control:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 0.2rem rgba(26,35,126,0.25);
+        }
+
+        /* Alertas */
+        .alert {
+            border-radius: 8px;
+            border: none;
+            padding: 1rem 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        /* Progress Overlay */
+        .progress-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255,255,255,0.9);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            backdrop-filter: blur(4px);
+        }
+
+        .spinner-border {
+            width: 3rem;
+            height: 3rem;
+            color: var(--primary-color);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: relative;
+                padding: 1rem;
+            }
+            
+            .content-wrapper {
+                margin-left: 0;
+                padding: 1rem;
+            }
+            
+            .main-container {
+                flex-direction: column;
+            }
+
+            .nav-link {
+                padding: 0.75rem 1rem;
+            }
+
+            .table-responsive {
+                margin: 0 -1rem;
+                width: calc(100% + 2rem);
+            }
+
+            .card {
+                margin: 1rem -1rem;
+                border-radius: 0;
+            }
+        }
+
+        /* Utilidades */
+        .shadow-sm { box-shadow: 0 2px 4px rgba(0,0,0,0.05) !important; }
+        .shadow { box-shadow: 0 4px 6px rgba(0,0,0,0.1) !important; }
+        .shadow-lg { box-shadow: 0 8px 16px rgba(0,0,0,0.1) !important; }
+    </style>
+    <asp:ContentPlaceHolder ID="HeadContent" runat="server" />
 </head>
 <body>
     <form runat="server">
         <asp:ScriptManager runat="server">
             <Scripts>
-                <%--To learn more about bundling scripts in ScriptManager see https://go.microsoft.com/fwlink/?LinkID=301884 --%>
-                <%--Framework Scripts--%>
-                <asp:ScriptReference Name="MsAjaxBundle" />
-                <asp:ScriptReference Name="jquery" />
-                <asp:ScriptReference Name="WebForms.js" Assembly="System.Web" Path="~/Scripts/WebForms/WebForms.js" />
-                <asp:ScriptReference Name="WebUIValidation.js" Assembly="System.Web" Path="~/Scripts/WebForms/WebUIValidation.js" />
-                <asp:ScriptReference Name="MenuStandards.js" Assembly="System.Web" Path="~/Scripts/WebForms/MenuStandards.js" />
-                <asp:ScriptReference Name="GridView.js" Assembly="System.Web" Path="~/Scripts/WebForms/GridView.js" />
-                <asp:ScriptReference Name="DetailsView.js" Assembly="System.Web" Path="~/Scripts/WebForms/DetailsView.js" />
-                <asp:ScriptReference Name="TreeView.js" Assembly="System.Web" Path="~/Scripts/WebForms/TreeView.js" />
-                <asp:ScriptReference Name="WebParts.js" Assembly="System.Web" Path="~/Scripts/WebForms/WebParts.js" />
-                <asp:ScriptReference Name="Focus.js" Assembly="System.Web" Path="~/Scripts/WebForms/Focus.js" />
-                <asp:ScriptReference Name="WebFormsBundle" />
-                <%--Site Scripts--%>
+                <%-- Referencias a scripts locales --%>
+                <asp:ScriptReference Path="~/Scripts/jquery-3.6.0.min.js" />
+                <asp:ScriptReference Path="~/Scripts/bootstrap.bundle.min.js" />
             </Scripts>
         </asp:ScriptManager>
 
-        <div class="container-fluid">
-            <div class="row flex-nowrap">
-                <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-dark">
-                    <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100">
-                        <a href="/" class="d-flex align-items-center pb-3 mb-md-0 me-md-auto text-white text-decoration-none">
-                            <span class="fs-5 d-none d-sm-inline">Menu</span>
+        <div class="main-container">
+            <!-- Sidebar -->
+            <div class="sidebar">
+                <h3 class="text-center">Menú Principal</h3>
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link" href='<%: ResolveUrl("~/Default.aspx") %>'>
+                            <i class="fas fa-home"></i>Home
                         </a>
-                        <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
-                            <li class="nav-item">
-                                <a href="../Default" class="nav-link align-middle px-0">
-                                    <i class="fs-4 bi-house"></i><span class="ms-1 d-none d-sm-inline">Home</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#submenu1" data-bs-toggle="collapse" class="nav-link px-0 align-middle">
-                                    <i class="fs-4 bi-speedometer2"></i><span class="ms-1 d-none d-sm-inline">Proveedores</span> </a>
-                                <ul class="collapse nav flex-column ms-1" id="submenu1" data-bs-parent="#menu">
-                                    <li class="w-100">
-                                        <a href="ABMProveedores" class="nav-link px-0"><span class="d-none d-sm-inline">ABM</span></a>
-                                    </li>
-                                    <li>
-                                        <a href="ListadoProveedores" class="nav-link px-0"><span class="d-none d-sm-inline">Listado</span></a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li>
-                                <a href="#submenu2" data-bs-toggle="collapse" class="nav-link px-0 align-middle">
-                                    <i class="fs-4 bi-speedometer2"></i><span class="ms-1 d-none d-sm-inline">Productos</span> </a>
-                                <ul class="collapse nav flex-column ms-1" id="submenu2" data-bs-parent="#menu">
-                                    <li class="w-100">
-                                        <a href="ABMProductos" class="nav-link px-0"><span class="d-none d-sm-inline">ABM</span></a>
-                                    </li>
-                                    <li>
-                                        <a href="ListadoProductos" class="nav-link px-0"><span class="d-none d-sm-inline">Listado</span></a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li>
-                                <a href="Contact.aspx" class="nav-link px-0 align-middle">
-                                    <i class="fs-4 bi-table"></i>
-                                    <span class="ms-1 d-none d-sm-inline">Datos del Grupo</span>
-                                </a>
-                            </li>
-                        </ul>
-                        <hr>
-                    </div>
-                </div>
-                <div class="col py-3">
-                    <div class="container body-content">
-                        <asp:ContentPlaceHolder ID="MainContent" runat="server">
-                        </asp:ContentPlaceHolder>
-                        <hr />
-                        <footer>
-                            <p>&copy; <%: DateTime.Now.Year %> - My ASP.NET Application</p>
-                        </footer>
-                    </div>
-                </div>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href='<%: ResolveUrl("~/Pages/ABMProveedores.aspx") %>'>
+                            <i class="fas fa-users"></i>ABM Proveedores
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href='<%: ResolveUrl("~/Pages/ListadoProveedores.aspx") %>'>
+                            <i class="fas fa-list"></i>Listado Proveedores
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href='<%: ResolveUrl("~/Pages/ABMProductos.aspx") %>'>
+                            <i class="fas fa-box"></i>ABM Productos
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href='<%: ResolveUrl("~/Pages/ListadoProductos.aspx") %>'>
+                            <i class="fas fa-boxes"></i>Listado Productos
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href='<%: ResolveUrl("~/Pages/ABMLocalidades.aspx") %>'>
+                            <i class="fas fa-map-marker-alt"></i>ABM Localidades
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href='<%: ResolveUrl("~/Pages/ListadoLocalidades.aspx") %>'>
+                            <i class="fas fa-list"></i>Listado Localidades
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href='<%: ResolveUrl("~/Pages/Contact.aspx") %>'>
+                            <i class="fas fa-info-circle"></i>Datos del Grupo
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Contenido principal -->
+            <div class="content-wrapper">
+                <asp:ContentPlaceHolder ID="MainContent" runat="server" />
             </div>
         </div>
-
     </form>
-    <asp:PlaceHolder runat="server">
-        <%: Scripts.Render("~/Scripts/bootstrap.js") %>
-    </asp:PlaceHolder>
+
+    <%-- Font Awesome --%>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet" />
 </body>
 </html>

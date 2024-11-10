@@ -7,11 +7,11 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace TPInteg_UI.Pages.Proveedores
+namespace TPInteg_UI
 {
 
 
-    public partial class Administracion
+    public partial class ListadoProveedores
     {
     }
 }
