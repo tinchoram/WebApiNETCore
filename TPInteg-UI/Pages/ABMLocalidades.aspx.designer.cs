@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace TPInteg_UI
+namespace TPInteg_UI.Pages
 {
 
 
@@ -15,49 +15,58 @@ namespace TPInteg_UI
     {
 
         /// <summary>
-        /// UpdatePanelLocalidades control.
+        /// ButtonNuevo control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.UpdatePanel UpdatePanelLocalidades;
+        protected global::System.Web.UI.WebControls.Button ButtonNuevo;
 
         /// <summary>
-        /// LabelMessage control.
+        /// PanelForm control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label LabelMessage;
+        protected global::System.Web.UI.WebControls.Panel PanelForm;
 
         /// <summary>
-        /// txtLocalidadNombre control.
+        /// LabelFormTitle control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtLocalidadNombre;
+        protected global::System.Web.UI.WebControls.Label LabelFormTitle;
 
         /// <summary>
-        /// btnAgregarLocalidad control.
+        /// RequiredFieldValidatorNombre control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnAgregarLocalidad;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidatorNombre;
 
         /// <summary>
-        /// btnActualizarLocalidad control.
+        /// RequiredFieldValidatorCP control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnActualizarLocalidad;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidatorCP;
+
+        /// <summary>
+        /// RangeValidatorCP control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RangeValidator RangeValidatorCP;
 
         /// <summary>
         /// GridViewLocalidades control.

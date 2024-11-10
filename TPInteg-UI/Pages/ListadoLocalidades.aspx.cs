@@ -95,6 +95,52 @@ namespace TPInteg_UI.Pages
             }
         }
 
+        protected void GridViewLocalidades_RowCommand(object sender, GridViewCommandEventArgs e)
+        {
+            if (e.CommandName == "EditarLocalidad")
+            {
+                int localidadId = Convert.ToInt32(e.CommandArgument);
+                // Redirigir a la página de edición de localidad, pasando el ID como parámetro
+                Response.Redirect($"EditarLocalidad.aspx?id={localidadId}");
+            }
+            else if (e.CommandName == "EliminarLocalidad")
+            {
+                int localidadId = Convert.ToInt32(e.CommandArgument);
+                // Llamar al método para eliminar la localidad
+                EliminarLocalidadAsync(localidadId);
+            }
+        }
+
+        private async void EliminarLocalidadAsync(int localidadId)
+        {
+            try
+            {
+                ShowLoading(true);
+                ShowError(false, string.Empty);
+
+                var result = await _localidadService.DeleteLocalidadAsync(localidadId);
+
+                if (result.Success)
+                {
+                    // Recargar la grilla después de eliminar la localidad
+                    await LoadLocalidadesAsync();
+                }
+                else
+                {
+                    ShowError(true, result.Message);
+                }
+            }
+            catch (Exception ex)
+            {
+                ShowError(true, "Ha ocurrido un error al eliminar la localidad. Por favor, intente nuevamente más tarde.");
+                System.Diagnostics.Debug.WriteLine($"Error: {ex.Message}");
+            }
+            finally
+            {
+                ShowLoading(false);
+            }
+        }
+
         protected void ButtonReintentarLocalidades_Click(object sender, EventArgs e)
         {
             RegisterAsyncTask(new PageAsyncTask(LoadLocalidadesAsync));

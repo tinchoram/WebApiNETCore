@@ -28,7 +28,8 @@
                             CssClass="table table-striped table-hover" 
                             AutoGenerateColumns="false"
                             EmptyDataText="No se encontraron localidades."
-                            EmptyDataCssClass="alert alert-info text-center">
+                            EmptyDataCssClass="alert alert-info text-center"
+                            OnRowCommand="GridViewLocalidades_RowCommand">
                             <Columns>
                                 <asp:BoundField DataField="Id" HeaderText="ID" />
                                 <asp:TemplateField HeaderText="Nombre">
@@ -39,6 +40,18 @@
                                 <asp:TemplateField HeaderText="Código Postal">
                                     <ItemTemplate>
                                         <%# Eval("CodigoPostal") != null ? Eval("CodigoPostal").ToString() : "-" %>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="Acciones">
+                                    <ItemTemplate>
+                                        <div class="btn-group">
+                                            <asp:LinkButton ID="btnEditar" runat="server" CommandName="EditarLocalidad" CommandArgument='<%# Eval("Id") %>' CssClass="btn btn-primary btn-sm">
+                                                <i class="fas fa-edit"></i> Editar
+                                            </asp:LinkButton>
+                                            <asp:LinkButton ID="btnEliminar" runat="server" CommandName="EliminarLocalidad" CommandArgument='<%# Eval("Id") %>' CssClass="btn btn-danger btn-sm ms-1" OnClientClick="return confirm('¿Está seguro que desea eliminar esta localidad?');">
+                                                <i class="fas fa-trash"></i> Eliminar
+                                            </asp:LinkButton>
+                                        </div>
                                     </ItemTemplate>
                                 </asp:TemplateField>
                             </Columns>
