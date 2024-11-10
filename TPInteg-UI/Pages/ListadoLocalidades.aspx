@@ -28,7 +28,8 @@
                             CssClass="table table-striped table-hover" 
                             AutoGenerateColumns="false"
                             EmptyDataText="No se encontraron localidades."
-                            EmptyDataCssClass="alert alert-info text-center">
+                            EmptyDataCssClass="alert alert-info text-center"
+                            OnRowCommand="GridViewLocalidades_RowCommand">
                             <Columns>
                                 <asp:BoundField DataField="Id" HeaderText="ID" />
                                 <asp:TemplateField HeaderText="Nombre">
@@ -41,11 +42,39 @@
                                         <%# Eval("CodigoPostal") != null ? Eval("CodigoPostal").ToString() : "-" %>
                                     </ItemTemplate>
                                 </asp:TemplateField>
+                                <asp:TemplateField HeaderText="Acciones">
+                                    <ItemTemplate>
+                                        <div class="btn-group">
+                                            <asp:LinkButton ID="btnEditar" runat="server" CommandName="EditarLocalidad" CommandArgument='<%# Eval("Id") %>' CssClass="btn btn-primary btn-sm">
+                                                <i class="fas fa-edit"></i> Editar
+                                            </asp:LinkButton>
+                                            <asp:LinkButton ID="btnEliminar" runat="server" CommandName="EliminarLocalidad" CommandArgument='<%# Eval("Id") %>' CssClass="btn btn-danger btn-sm ms-1" OnClientClick="return confirm('¿Está seguro que desea eliminar esta localidad?');">
+                                                <i class="fas fa-trash"></i> Eliminar
+                                            </asp:LinkButton>
+                                        </div>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
                             </Columns>
                         </asp:GridView>
                     </div>
                 </ContentTemplate>
             </asp:UpdatePanel>
+
+            <%-- Formulario de Alta de Localidad --%>
+            <div class="mt-4">
+                <h3>Alta de Localidad</h3>
+                <div class="form-group">
+                    <label for="<%= TextBoxNombre.ClientID %>">Nombre:</label>
+                    <asp:TextBox ID="TextBoxNombre" runat="server" CssClass="form-control"></asp:TextBox>
+                </div>
+                <div class="form-group">
+                    <label for="<%= TextBoxCodigoPostal.ClientID %>">Código Postal:</label>
+                    <asp:TextBox ID="TextBoxCodigoPostal" runat="server" CssClass="form-control"></asp:TextBox>
+                </div>
+                <div class="mt-3">
+                    <asp:Button ID="ButtonGuardar" runat="server" Text="Guardar" OnClick="ButtonGuardar_Click" CssClass="btn btn-primary" />
+                </div>
+            </div>
 
             <%-- Indicador de Progreso --%>
             <asp:UpdateProgress ID="UpdateProgressLocalidades" runat="server" DisplayAfter="0">

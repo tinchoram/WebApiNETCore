@@ -101,7 +101,7 @@ public class ProveedorController : ControllerBase
         return Ok(proveedores);
     }
 
-    [HttpPatch("{id}")]
+    [HttpPut("{id}")]
     [ProducesResponseType(204)]
     [ProducesResponseType(404)]
     [ProducesResponseType(400)]

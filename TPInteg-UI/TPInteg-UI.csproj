@@ -154,6 +154,8 @@
     <Content Include="Pages\ABMProductos.aspx" />
     <Content Include="Pages\ABMProveedores.aspx" />
     <Content Include="Pages\Contact.aspx" />
+    <Content Include="Pages\EditarLocalidad.aspx" />
+    <Content Include="Pages\EditarProveedor.aspx" />
     <Content Include="Pages\ListadoLocalidades.aspx" />
     <Content Include="Pages\ListadoProductos.aspx" />
     <Content Include="Pages\ListadoProveedores.aspx" />
@@ -251,6 +253,7 @@
     </Compile>
     <Compile Include="Pages\ABMLocalidades.aspx.cs">
       <DependentUpon>ABMLocalidades.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Pages\ABMLocalidades.aspx.designer.cs">
       <DependentUpon>ABMLocalidades.aspx</DependentUpon>
@@ -275,6 +278,20 @@
     </Compile>
     <Compile Include="Pages\Contact.aspx.designer.cs">
       <DependentUpon>Contact.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\EditarLocalidad.aspx.cs">
+      <DependentUpon>EditarLocalidad.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\EditarLocalidad.aspx.designer.cs">
+      <DependentUpon>EditarLocalidad.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\EditarProveedor.aspx.cs">
+      <DependentUpon>EditarProveedor.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\EditarProveedor.aspx.designer.cs">
+      <DependentUpon>EditarProveedor.aspx</DependentUpon>
     </Compile>
     <Compile Include="Pages\ListadoLocalidades.aspx.cs">
       <DependentUpon>ListadoLocalidades.aspx</DependentUpon>

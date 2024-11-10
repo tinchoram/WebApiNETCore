@@ -11,70 +11,52 @@ namespace TPInteg_UI.Pages
 {
 
 
-    public partial class ABMLocalidades
+    public partial class EditarLocalidad
     {
 
         /// <summary>
-        /// ButtonNuevo control.
+        /// UpdatePanelEditarLocalidad control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button ButtonNuevo;
+        protected global::System.Web.UI.UpdatePanel UpdatePanelEditarLocalidad;
 
         /// <summary>
-        /// PanelForm control.
+        /// PanelErrorEditarLocalidad control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel PanelForm;
+        protected global::System.Web.UI.WebControls.Panel PanelErrorEditarLocalidad;
 
         /// <summary>
-        /// LabelFormTitle control.
+        /// LabelErrorEditarLocalidad control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label LabelFormTitle;
+        protected global::System.Web.UI.WebControls.Label LabelErrorEditarLocalidad;
 
         /// <summary>
-        /// RequiredFieldValidatorNombre control.
+        /// HiddenFieldLocalidadId control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidatorNombre;
+        protected global::System.Web.UI.WebControls.HiddenField HiddenFieldLocalidadId;
 
         /// <summary>
-        /// RequiredFieldValidatorCP control.
+        /// UpdateProgressEditarLocalidad control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidatorCP;
-
-        /// <summary>
-        /// RangeValidatorCP control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RangeValidator RangeValidatorCP;
-
-        /// <summary>
-        /// GridViewLocalidades control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView GridViewLocalidades;
+        protected global::System.Web.UI.UpdateProgress UpdateProgressEditarLocalidad;
     }
 }

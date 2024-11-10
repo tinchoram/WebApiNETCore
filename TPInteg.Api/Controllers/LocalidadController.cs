@@ -87,7 +87,7 @@ public class LocalidadController : ControllerBase
         return Ok(localidades);
     }
 
-    [HttpPatch("{id}")]
+    [HttpPut("{id}")]
     [ProducesResponseType(204)]
     [ProducesResponseType(404)]
     [ProducesResponseType(400)]

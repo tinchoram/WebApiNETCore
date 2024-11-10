@@ -13,5 +13,68 @@ namespace TPInteg_UI.Pages
 
     public partial class ListadoLocalidades
     {
+
+        /// <summary>
+        /// UpdatePanelLocalidades control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.UpdatePanel UpdatePanelLocalidades;
+
+        /// <summary>
+        /// PanelErrorLocalidades control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel PanelErrorLocalidades;
+
+        /// <summary>
+        /// LabelErrorLocalidades control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label LabelErrorLocalidades;
+
+        /// <summary>
+        /// ButtonReintentarLocalidades control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button ButtonReintentarLocalidades;
+
+        /// <summary>
+        /// NoDataPanelLocalidades control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel NoDataPanelLocalidades;
+
+        /// <summary>
+        /// GridViewLocalidades control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView GridViewLocalidades;
+
+        /// <summary>
+        /// UpdateProgressLocalidades control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.UpdateProgress UpdateProgressLocalidades;
     }
 }
