@@ -60,6 +60,22 @@
                 </ContentTemplate>
             </asp:UpdatePanel>
 
+            <%-- Formulario de Alta de Localidad --%>
+            <div class="mt-4">
+                <h3>Alta de Localidad</h3>
+                <div class="form-group">
+                    <label for="<%= TextBoxNombre.ClientID %>">Nombre:</label>
+                    <asp:TextBox ID="TextBoxNombre" runat="server" CssClass="form-control"></asp:TextBox>
+                </div>
+                <div class="form-group">
+                    <label for="<%= TextBoxCodigoPostal.ClientID %>">Código Postal:</label>
+                    <asp:TextBox ID="TextBoxCodigoPostal" runat="server" CssClass="form-control"></asp:TextBox>
+                </div>
+                <div class="mt-3">
+                    <asp:Button ID="ButtonGuardar" runat="server" Text="Guardar" OnClick="ButtonGuardar_Click" CssClass="btn btn-primary" />
+                </div>
+            </div>
+
             <%-- Indicador de Progreso --%>
             <asp:UpdateProgress ID="UpdateProgressLocalidades" runat="server" DisplayAfter="0">
                 <ProgressTemplate>

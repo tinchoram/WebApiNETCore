@@ -2,19 +2,16 @@
 using System.Threading.Tasks;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using TPInteg_UI.DTO;
 using TPInteg_UI.Services;
 
 namespace TPInteg_UI.Pages
 {
     public partial class ListadoLocalidades : Page
     {
-        protected UpdateProgress UpdateProgressLocalidades;
-        protected UpdatePanel UpdatePanelLocalidades;
-        protected Panel PanelErrorLocalidades;
-        protected Panel NoDataPanelLocalidades;
-        protected GridView GridViewLocalidades;
-        protected Label LabelErrorLocalidades;
-        protected Button ButtonReintentarLocalidades;
+        protected TextBox TextBoxNombre;
+        protected TextBox TextBoxCodigoPostal;
+        protected Button ButtonGuardar;
 
         private readonly LocalidadService _localidadService;
 
@@ -144,6 +141,47 @@ namespace TPInteg_UI.Pages
         protected void ButtonReintentarLocalidades_Click(object sender, EventArgs e)
         {
             RegisterAsyncTask(new PageAsyncTask(LoadLocalidadesAsync));
+        }
+
+        protected async void ButtonGuardar_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                ShowLoading(true);
+                ShowError(false, string.Empty);
+
+                string nombre = TextBoxNombre.Text;
+                int codigoPostal = Convert.ToInt32(TextBoxCodigoPostal.Text);
+
+                var result = await _localidadService.CreateLocalidadAsync(new LocalidadDTO
+                {
+                    nombre = nombre,
+                    codigoPostal = codigoPostal
+                });
+
+                if (result.Success)
+                {
+                    // Limpiar los campos después de guardar
+                    TextBoxNombre.Text = string.Empty;
+                    TextBoxCodigoPostal.Text = string.Empty;
+
+                    // Recargar la grilla después de agregar la localidad
+                    await LoadLocalidadesAsync();
+                }
+                else
+                {
+                    ShowError(true, result.Message);
+                }
+            }
+            catch (Exception ex)
+            {
+                ShowError(true, "Ha ocurrido un error al agregar la localidad. Por favor, intente nuevamente más tarde.");
+                System.Diagnostics.Debug.WriteLine($"Error: {ex.Message}");
+            }
+            finally
+            {
+                ShowLoading(false);
+            }
         }
     }
 }
