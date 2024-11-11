@@ -140,8 +140,10 @@
                     <asp:CheckBox ID="CheckEsActivo" runat="server" CssClass="form-control" Checked="true"/>
                 </div>
 
+                <%--Muestra el listado de Validaciones--%>
                 <asp:ValidationSummary ID="ValidationSummary1" runat="server" ForeColor="Red" />
                 
+                <%-- Botones de Acción --%>
                 <div class="mt-3">
                     <asp:Button ID="ButtonGuardar" runat="server" Text="Guardar" OnClick="ButtonGuardar_Click" CssClass="btn btn-primary" CausesValidation="true"/>
                 </div>

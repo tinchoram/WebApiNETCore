@@ -122,10 +122,16 @@ public class ProveedorController : ControllerBase
         try
         {
             proveedor.Nombre = data.Nombre;
-            proveedor.Direccion = data.Direccion;
+            proveedor.Apellido = data.Apellido;
+            proveedor.NombreComercial = data.NombreComercial;
+            proveedor.Direccion = data.Direccion;            
             proveedor.Email = data.Email;
             proveedor.Telefono = data.Telefono;
             proveedor.LocalidadId = data.LocalidadId;
+            proveedor.Cuit = data.Cuit;
+            proveedor.SitioWebUrl = data.SitioWebUrl;
+            proveedor.Activo = data.Activo;
+            proveedor.FechaNacimiento = data.FechaNacimiento;
 
             await _context.SaveChangesAsync();
             return NoContent();

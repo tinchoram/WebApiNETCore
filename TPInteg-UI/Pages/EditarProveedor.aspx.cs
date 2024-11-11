@@ -76,9 +76,14 @@ namespace TPInteg_UI.Pages
                 {
                     var proveedor = result.Data;
                     TextBoxNombre.Text = proveedor.Nombre;
+                    TextBoxApellido.Text = proveedor.Apellido;
+                    TextBoxDireccion.Text = proveedor.Direccion;
+                    TextBoxNombreComercial.Text = proveedor.NombreComercial;
                     TextBoxEmail.Text = proveedor.Email;
                     TextBoxTelefono.Text = proveedor.Telefono;
-                    TextBoxDireccion.Text = proveedor.Direccion;
+                    TextBoxSitioWebUrl.Text = proveedor.SitioWebUrl;
+                    TextBoxDate.Text = proveedor.FechaNacimiento.ToString();
+                    ucNumberFormatter.CuitNumber = proveedor.Cuit;
 
                     // Seleccionar la localidad actual en el DropDownList
                     DropDownListLocalidad.SelectedValue = proveedor.LocalidadId.ToString();
@@ -109,35 +114,57 @@ namespace TPInteg_UI.Pages
         {
             try
             {
-                ShowError(false, string.Empty);
-
-                string nombre = TextBoxNombre.Text;
-                string email = TextBoxEmail.Text;
-                string telefono = TextBoxTelefono.Text;
-                string direccion = TextBoxDireccion.Text;
-                int localidadId = Convert.ToInt32(DropDownListLocalidad.SelectedValue);
-                int proveedorId = Convert.ToInt32(HiddenFieldProveedorId.Value);
-
-                var proveedor = new ProveedorDTO
+                if (Page.IsValid)
                 {
-                    Id = proveedorId,
-                    Nombre = nombre,
-                    Email = email,
-                    Telefono = telefono,
-                    Direccion = direccion,
-                    LocalidadId = localidadId
-                };
+                    ShowError(false, string.Empty);
 
-                var result = await _proveedorService.UpdateProveedorAsync(proveedorId, proveedor);
+                    string nombre = TextBoxNombre.Text;
+                    string apellido = TextBoxApellido.Text;
+                    string nombreComercial = TextBoxNombreComercial.Text;
+                    string direccion = TextBoxDireccion.Text;
+                    string email = TextBoxEmail.Text;
+                    string telefono = TextBoxTelefono.Text;
+                    int localidadId = Convert.ToInt32(DropDownListLocalidad.SelectedValue);
+                    int proveedorId = Convert.ToInt32(HiddenFieldProveedorId.Value);
+                    string cuit = ucNumberFormatter.CuitNumber;
+                    string websiteUrl = TextBoxSitioWebUrl.Text;
+                    bool active = CheckEsActivo.Checked;
 
-                if (result.Success)
-                {
-                    // Redirigir a la página de listado después de actualizar
-                    Response.Redirect("ListadoProveedores.aspx");
-                }
-                else
-                {
-                    ShowError(true, result.Message);
+                    string[] fecha = TextBoxDate.Text.Contains("-") ?
+                        TextBoxDate.Text.Split('-') :
+                            TextBoxDate.Text.Contains("/") ?
+                            TextBoxDate.Text.Split('/') :
+                            TextBoxDate.Text.Split('.');
+
+                    DateTime fechaNacimiento = new DateTime(int.Parse(fecha[2]), int.Parse(fecha[1]), int.Parse(fecha[0]));
+
+                    var proveedor = new ProveedorDTO
+                    {
+                        Nombre = nombre,
+                        Apellido = apellido,
+                        NombreComercial = nombreComercial,
+                        Direccion = direccion,
+                        Email = email,
+                        Telefono = telefono,
+                        LocalidadId = localidadId,
+                        Cuit = cuit,
+                        SitioWebUrl = websiteUrl,
+                        Activo = active,
+                        FechaNacimiento = fechaNacimiento,
+                        FechaAlta = DateTime.Now
+                    };
+
+                    var result = await _proveedorService.UpdateProveedorAsync(proveedorId, proveedor);
+
+                    if (result.Success)
+                    {
+                        // Redirigir a la página de listado después de actualizar
+                        Response.Redirect("ListadoProveedores.aspx");
+                    }
+                    else
+                    {
+                        ShowError(true, result.Message);
+                    }
                 }
             }
             catch (Exception ex)
