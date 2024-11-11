@@ -40,6 +40,10 @@ namespace TPInteg_UI.Pages
                 RegisterAsyncTask(new PageAsyncTask(LoadProveedoresAsync));
                 RegisterAsyncTask(new PageAsyncTask(LoadLocalidadesAsync));
             }
+            else 
+            { 
+
+            }
         }
 
         private void ShowLoading(bool show)
@@ -181,39 +185,66 @@ namespace TPInteg_UI.Pages
         {
             try
             {
-                ShowLoading(true);
-                ShowError(false, string.Empty);
-
-                string nombre = TextBoxNombre.Text;
-                string direccion = TextBoxDireccion.Text;
-                string email = TextBoxEmail.Text;
-                string telefono = TextBoxTelefono.Text;
-                int localidadId = Convert.ToInt32(DropDownListLocalidad.SelectedValue);
-
-                var result = await _proveedorService.CreateProveedorAsync(new ProveedorDTO
+                if (Page.IsValid)
                 {
-                    Nombre = nombre,
-                    Direccion = direccion,
-                    Email = email,
-                    Telefono = telefono,
-                    LocalidadId = localidadId
-                });
+                    ShowLoading(true);
+                    ShowError(false, string.Empty);
 
-                if (result.Success)
-                {
-                    // Limpiar los campos después de guardar
-                    TextBoxNombre.Text = string.Empty;
-                    TextBoxDireccion.Text = string.Empty;
-                    TextBoxEmail.Text = string.Empty;
-                    TextBoxTelefono.Text = string.Empty;
-                    DropDownListLocalidad.SelectedIndex = 0;
+                    string nombre = TextBoxNombre.Text;
+                    string apellido = TextBoxApellido.Text;
+                    string nombreComercial = TextBoxNombreComercial.Text;
+                    string direccion = TextBoxDireccion.Text;
+                    string email = TextBoxEmail.Text;
+                    string telefono = TextBoxTelefono.Text;
+                    int localidadId = Convert.ToInt32(DropDownListLocalidad.SelectedValue);
+                    string cuit = ucNumberFormatter.CuitNumber;
+                    string websiteUrl = TextBoxSitioWebUrl.Text;
+                    bool active = CheckEsActivo.Checked;
+                    
+                    string[] fecha = TextBoxDate.Text.Contains("-") ?
+                        TextBoxDate.Text.Split('-') :
+                            TextBoxDate.Text.Contains("/") ?
+                            TextBoxDate.Text.Split('/') :
+                            TextBoxDate.Text.Split('.');
 
-                    // Recargar la grilla después de agregar el proveedor
-                    await LoadProveedoresAsync();
-                }
-                else
-                {
-                    ShowError(true, result.Message);
+                    DateTime fechaNacimiento = new DateTime(int.Parse(fecha[2]), int.Parse(fecha[1]), int.Parse(fecha[0]));
+
+                    var result = await _proveedorService.CreateProveedorAsync(new ProveedorDTO
+                    {
+                        Nombre = nombre,
+                        Apellido = apellido,
+                        NombreComercial = nombreComercial,
+                        Direccion = direccion,
+                        Email = email,
+                        Telefono = telefono,
+                        LocalidadId = localidadId,
+                        Cuit = cuit,
+                        SitioWebUrl = websiteUrl,
+                        Activo = active,
+                        FechaNacimiento = fechaNacimiento,
+                        FechaAlta = DateTime.Now
+                    });
+
+                    if (result.Success)
+                    {
+                        // Limpiar los campos después de guardar
+                        TextBoxNombre.Text = string.Empty;
+                        TextBoxApellido.Text = string.Empty;
+                        TextBoxNombreComercial.Text = string.Empty;
+                        TextBoxDireccion.Text = string.Empty;
+                        TextBoxEmail.Text = string.Empty;
+                        TextBoxTelefono.Text = string.Empty;
+                        ucNumberFormatter.CuitNumber = string.Empty;
+                        TextBoxSitioWebUrl.Text = string.Empty;
+                        DropDownListLocalidad.SelectedIndex = 0;
+                        TextBoxDate.Text = string.Empty;
+                        // Recargar la grilla después de agregar el proveedor
+                        await LoadProveedoresAsync();
+                    }
+                    else
+                    {
+                        ShowError(true, result.Message);
+                    }
                 }
             }
             catch (Exception ex)
