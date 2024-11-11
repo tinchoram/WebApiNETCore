@@ -7,11 +7,11 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace TPInteg_UI
+namespace TPInteg_UI.Pages
 {
 
 
-    public partial class ABMProveedores
+    public partial class EditarProducto
     {
     }
 }

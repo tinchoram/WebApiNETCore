@@ -73,22 +73,51 @@ public class ProductoController : ControllerBase
         return productos.Any() ? Ok(productos) : NotFound();
     }
 
-    [HttpPatch("{id}")]
+    [HttpPut("{id}")]
     [ProducesResponseType(204)]
     [ProducesResponseType(404)]
     [SwaggerOperation(Summary = "Actualizar un producto")]
     public async Task<IActionResult> Actualizar(int id, [FromBody] Producto data)
     {
-        var producto = await _context.Producto.FindAsync(id);
-        if (producto == null) return NotFound();
+        try
+        {
+            var producto = await _context.Producto.FindAsync(id);
+            if (producto == null) return NotFound();
 
-        producto.Codigo = data.Codigo;
-        producto.Descripcion = data.Descripcion;
-        producto.PrecioUnitario = data.PrecioUnitario;
-        producto.Proveedor = data.Proveedor;
+            // Actualizar todos los campos necesarios
+            producto.Codigo = data.Codigo;
+            producto.Descripcion = data.Descripcion;
+            producto.PrecioUnitario = data.PrecioUnitario;
+            producto.Stock = data.Stock;
+            producto.ProveedorId = data.ProveedorId;
 
-        await _context.SaveChangesAsync();
-        return NoContent();
+            // Manejar el estado y las fechas
+            if (data.Estado?.ToLower() == "inactivo")
+            {
+                producto.FechaBaja = DateOnly.FromDateTime(DateTime.Now);
+            }
+            else
+            {
+                producto.FechaBaja = null;
+                producto.Estado = "activo";
+            }
+
+            // Si la fecha de alta viene en el request, la actualizamos
+            if (data.FechaAlta.HasValue)
+            {
+                producto.FechaAlta = data.FechaAlta.Value;
+            }
+
+            _context.Entry(producto).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
+
+            return NoContent();
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error al actualizar el producto {Id}", id);
+            return BadRequest($"Error actualizando el producto. Detalle: {ex.Message}");
+        }
     }
 
     [HttpDelete("{id}")]
