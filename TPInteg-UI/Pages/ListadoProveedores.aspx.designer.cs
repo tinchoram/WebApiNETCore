@@ -222,6 +222,33 @@ namespace TPInteg_UI.Pages
         protected global::System.Web.UI.WebControls.RegularExpressionValidator RegularExpressionValidator2;
 
         /// <summary>
+        /// TextBoxCantSucursales control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox TextBoxCantSucursales;
+
+        /// <summary>
+        /// CantSucursalesRequiredFieldValidator control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator CantSucursalesRequiredFieldValidator;
+
+        /// <summary>
+        /// CantSucursalesRangeValidator control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RangeValidator CantSucursalesRangeValidator;
+
+        /// <summary>
         /// LocalidadRequiredFieldValidator control.
         /// </summary>
         /// <remarks>
