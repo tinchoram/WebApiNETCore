@@ -5,6 +5,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using TPInteg_UI.DTO;
 using TPInteg_UI.Services;
+using TPInteg_UI.Utilities;
 
 namespace TPInteg_UI.Pages
 {
@@ -200,14 +201,7 @@ namespace TPInteg_UI.Pages
                     string cuit = ucNumberFormatter.CuitNumber;
                     string websiteUrl = TextBoxSitioWebUrl.Text;
                     bool active = CheckEsActivo.Checked;
-                    
-                    string[] fecha = TextBoxDate.Text.Contains("-") ?
-                        TextBoxDate.Text.Split('-') :
-                            TextBoxDate.Text.Contains("/") ?
-                            TextBoxDate.Text.Split('/') :
-                            TextBoxDate.Text.Split('.');
-
-                    DateTime fechaNacimiento = new DateTime(int.Parse(fecha[2]), int.Parse(fecha[1]), int.Parse(fecha[0]));
+                    DateTime fechaNacimiento = DateTimeParsing.DateTimeFromString(TextBoxDate.Text);
 
                     var result = await _proveedorService.CreateProveedorAsync(new ProveedorDTO
                     {
