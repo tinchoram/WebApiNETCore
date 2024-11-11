@@ -15,6 +15,7 @@ namespace TPInteg_UI.DTO
         public int LocalidadId { get; set; }
         public string Cuit { get; set; }
         public string SitioWebUrl { get; set; }
+        public int CantSucursales { get; set; }
         public bool Activo { get; set; } = true;
         public DateTime? FechaNacimiento { get; set; }
         public DateTime? FechaAlta { get; set; }

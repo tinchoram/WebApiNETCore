@@ -77,6 +77,21 @@
                         ValidationExpression="^(?:(?:31(\/|-|\.)(?:0?[13578]|1[02]))\1|(?:(?:29|30)(\/|-|\.)(?:0?[13-9]|1[0-2])\2))(?:(?:1[6-9]|[2-9]\d)?\d{2})$|^(?:29(\/|-|\.)0?2\3(?:(?:(?:1[6-9]|[2-9]\d)?(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]|[3579][26])00))))$|^(?:0?[1-9]|1\d|2[0-8])(\/|-|\.)(?:(?:0?[1-9])|(?:1[0-2]))\4(?:(?:1[6-9]|[2-9]\d)?\d{2})$"                         
                         ErrorMessage="El formato de fecha es incorrecto o contiene letras" Display="None"></asp:RegularExpressionValidator>
                 </div>
+                <div class="form-group p-md-2">
+                    <div class="col-md-4">
+                        <div class="input-group">
+                            <label for="<%= TextBoxCantSucursales.ClientID %>" class="col-md-4 control-label">Cantidad Sucursales:</label>
+                            <asp:TextBox type="number" ID="TextBoxCantSucursales" runat="server" CssClass="form-control" PlaceHolder="10"></asp:TextBox>                    
+                            <asp:RequiredFieldValidator ID="CantSucursalesRequiredFieldValidator" runat="server" ErrorMessage="Ingrese cantidad de Sucursales (0 si no posee), MAX: 30." ControlToValidate="TextBoxCantSucursales" Display="None"></asp:RequiredFieldValidator>
+                            <asp:RangeValidator runat="server" ID="CantSucursalesRangeValidator" ControlToValidate="TextBoxCantSucursales" 
+                                type="Integer" 
+                                minimumvalue="0" 
+                                maximumvalue="30" 
+                                ErrorMessage="Cant de Sucursales, por favor ingrese un valor entre 0 y 30" Display="None"/>
+
+                        </div>
+                    </div>
+                </div>
                 <div class="form-group">
                     <label for="<%= DropDownListLocalidad.ClientID %>">Localidad:</label>
                     <asp:DropDownList ID="DropDownListLocalidad" runat="server" CssClass="form-control"></asp:DropDownList>

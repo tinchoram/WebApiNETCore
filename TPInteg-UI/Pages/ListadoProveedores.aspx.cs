@@ -41,7 +41,6 @@ namespace TPInteg_UI.Pages
         {
             if (!IsPostBack)
             {
-                //RegisterEventHandlers();
                 RegisterAsyncTask(new PageAsyncTask(LoadProveedoresAsync));
                 RegisterAsyncTask(new PageAsyncTask(LoadLocalidadesAsync));                
             }
@@ -49,22 +48,6 @@ namespace TPInteg_UI.Pages
             {                
             }
         }
-        //private void RegisterEventHandlers()
-        //{
-        //    if (ucSearchControlPorNombre != null)
-        //    {
-        //        System.Diagnostics.Debug.WriteLine("Registering SearchClicked event.");
-        //        ucSearchControlPorNombre.SearchClicked += new EventHandler<string>(SearchPorNombre_SearchClicked);
-        //    }
-        //    else
-        //    {
-        //        System.Diagnostics.Debug.WriteLine("ucSearchControlPorNombre is null.");
-        //    }
-        //}
-        //private void SearchPorNombre_SearchClicked(object sender, string e)
-        //{
-        //    System.Diagnostics.Debug.WriteLine("Event Fired: " + e);
-        //}
 
         private void ShowLoading(bool show)
         {
@@ -221,6 +204,8 @@ namespace TPInteg_UI.Pages
                     string cuit = ucNumberFormatter.CuitNumber;
                     string websiteUrl = TextBoxSitioWebUrl.Text;
                     bool active = CheckEsActivo.Checked;
+                    int cantSucursales = 0;
+                    int.TryParse(TextBoxCantSucursales.Text, out cantSucursales);
                     DateTime fechaNacimiento = DateTimeParsing.DateTimeFromString(TextBoxDate.Text);
 
                     var result = await _proveedorService.CreateProveedorAsync(new ProveedorDTO
@@ -236,6 +221,7 @@ namespace TPInteg_UI.Pages
                         SitioWebUrl = websiteUrl,
                         Activo = active,
                         FechaNacimiento = fechaNacimiento,
+                        CantSucursales = cantSucursales,
                         FechaAlta = DateTime.Now
                     });
 

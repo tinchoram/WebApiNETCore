@@ -83,9 +83,9 @@ namespace TPInteg_UI.Pages
                     TextBoxEmail.Text = proveedor.Email;
                     TextBoxTelefono.Text = proveedor.Telefono;
                     TextBoxSitioWebUrl.Text = proveedor.SitioWebUrl;
-                    TextBoxDate.Text = proveedor.FechaNacimiento.ToString();
+                    TextBoxDate.Text = proveedor.FechaNacimiento.Value.ToShortDateString();
                     ucNumberFormatter.CuitNumber = proveedor.Cuit;
-
+                    TextBoxCantSucursales.Text = proveedor.CantSucursales.ToString();
                     // Seleccionar la localidad actual en el DropDownList
                     DropDownListLocalidad.SelectedValue = proveedor.LocalidadId.ToString();
                 }
@@ -130,6 +130,8 @@ namespace TPInteg_UI.Pages
                     string cuit = ucNumberFormatter.CuitNumber;
                     string websiteUrl = TextBoxSitioWebUrl.Text;
                     bool active = CheckEsActivo.Checked;
+                    int cantSucursales = 0;
+                    int.TryParse(TextBoxCantSucursales.Text, out cantSucursales);
                     DateTime fechaNacimiento = DateTimeParsing.DateTimeFromString(TextBoxDate.Text);
 
                     var proveedor = new ProveedorDTO
@@ -145,6 +147,7 @@ namespace TPInteg_UI.Pages
                         SitioWebUrl = websiteUrl,
                         Activo = active,
                         FechaNacimiento = fechaNacimiento,
+                        CantSucursales = cantSucursales,
                         FechaAlta = DateTime.Now
                     };
 

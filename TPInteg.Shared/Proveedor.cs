@@ -13,6 +13,7 @@ namespace TPInteg.Shared
         public int LocalidadId { get; set; }
         public string Cuit { get; set; }
         public string SitioWebUrl { get; set; }
+        public int CantSucursales { get; set; }
         public bool Activo { get; set; }
         public DateTime? FechaNacimiento { get; set; }
         public DateTime? FechaAlta { get; set; }

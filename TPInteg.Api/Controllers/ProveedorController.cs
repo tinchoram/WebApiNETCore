@@ -131,6 +131,7 @@ public class ProveedorController : ControllerBase
             proveedor.Cuit = data.Cuit;
             proveedor.SitioWebUrl = data.SitioWebUrl;
             proveedor.Activo = data.Activo;
+            proveedor.CantSucursales = data.CantSucursales;
             proveedor.FechaNacimiento = data.FechaNacimiento;
 
             await _context.SaveChangesAsync();
