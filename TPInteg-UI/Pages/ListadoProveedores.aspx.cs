@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using TPInteg_UI.Controls;
 using TPInteg_UI.DTO;
 using TPInteg_UI.Services;
 using TPInteg_UI.Utilities;
@@ -10,7 +13,7 @@ using TPInteg_UI.Utilities;
 namespace TPInteg_UI.Pages
 {
     public partial class ListadoProveedores : Page
-    {
+    {        
         protected UpdateProgress UpdateProgressProveedores;
         protected UpdatePanel UpdatePanelProveedores;
         protected Panel PanelErrorProveedores;
@@ -27,25 +30,41 @@ namespace TPInteg_UI.Pages
 
         private readonly ProveedorService _proveedorService;
         private readonly LocalidadService _localidadService;
-
+        
         public ListadoProveedores()
         {
             _proveedorService = new ProveedorService();
-            _localidadService = new LocalidadService();
+            _localidadService = new LocalidadService();            
         }
 
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
             {
+                //RegisterEventHandlers();
                 RegisterAsyncTask(new PageAsyncTask(LoadProveedoresAsync));
-                RegisterAsyncTask(new PageAsyncTask(LoadLocalidadesAsync));
+                RegisterAsyncTask(new PageAsyncTask(LoadLocalidadesAsync));                
             }
             else 
-            { 
-
+            {                
             }
         }
+        //private void RegisterEventHandlers()
+        //{
+        //    if (ucSearchControlPorNombre != null)
+        //    {
+        //        System.Diagnostics.Debug.WriteLine("Registering SearchClicked event.");
+        //        ucSearchControlPorNombre.SearchClicked += new EventHandler<string>(SearchPorNombre_SearchClicked);
+        //    }
+        //    else
+        //    {
+        //        System.Diagnostics.Debug.WriteLine("ucSearchControlPorNombre is null.");
+        //    }
+        //}
+        //private void SearchPorNombre_SearchClicked(object sender, string e)
+        //{
+        //    System.Diagnostics.Debug.WriteLine("Event Fired: " + e);
+        //}
 
         private void ShowLoading(bool show)
         {
@@ -86,6 +105,7 @@ namespace TPInteg_UI.Pages
                         }
                         if (NoDataPanelProveedores != null)
                             NoDataPanelProveedores.Visible = false;
+                        Session["ProveedoresList"] = result.Data;
                     }
                     else
                     {
@@ -249,6 +269,44 @@ namespace TPInteg_UI.Pages
             finally
             {
                 ShowLoading(false);
+            }
+        }
+
+        protected async void SearchButton_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                List<ProveedorDTO> proveedoresList = (List<ProveedorDTO>)Session["ProveedoresList"];
+                if (proveedoresList == null)
+                {
+                    return;
+                }
+                else
+                {
+                    string nombreValue = txtSearchByNameInput.Text;
+                    string apellidoValue = txtSearchByLastNameInput.Text;
+                    string nombreComercialValue = txtSearchByComercialNameInput.Text;
+
+                    if (string.IsNullOrEmpty(nombreValue) && 
+                        string.IsNullOrEmpty(apellidoValue) && 
+                        string.IsNullOrEmpty(nombreComercialValue))
+                    {
+                        return;
+                    }
+
+                    var proveedoresFiltrados = proveedoresList.Where(p => 
+                        p.Nombre.ToLower().Contains(nombreValue) &&
+                        p.Apellido.ToLower().Contains(apellidoValue) &&
+                        p.NombreComercial.ToLower().Contains(nombreComercialValue));
+
+                    GridViewProveedores.DataSource = proveedoresFiltrados;
+                    GridViewProveedores.DataBind();
+                }
+            }
+            catch (Exception ex)
+            {
+                ShowError(true, "Ha ocurrido un error inesperado. Por favor, intente nuevamente más tarde.");
+                System.Diagnostics.Debug.WriteLine($"Error: {ex.Message}");
             }
         }
     }

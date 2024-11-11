@@ -1,5 +1,7 @@
 ﻿<%@ Page Title="Listado de Proveedores" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="ListadoProveedores.aspx.cs" Inherits="TPInteg_UI.Pages.ListadoProveedores" Async="true" %>
 <%@ Register Src="~/Controls/CuitNumberFormatter.ascx" TagPrefix="uc" TagName="NumberFormatter" %>
+<%@ Register Src="~/Controls/SearchControl.ascx" TagPrefix="uc" TagName="SearchControl" %>
+
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <div class="card">
@@ -22,6 +24,26 @@
                     <asp:Panel ID="NoDataPanelProveedores" runat="server" Visible="false" CssClass="alert alert-info">
                         <i class="fas fa-info-circle me-2"></i>No hay proveedores disponibles.
                     </asp:Panel>
+
+                    <%-- Filtros de Proveedores --%>                    
+                    <div class="mt-3">
+                        <asp:Panel ID="FiltrosPanel" runat="server" BorderWidth="1" BackColor="LightBlue" ForeColor="White">
+                            <div class="input-group mb-3">
+                                <label for="<%= txtSearchByNameInput.ClientID %>">Bucar Por Nombre:</label>
+                                <asp:TextBox ID="txtSearchByNameInput" CssClass="form-control" placeholder="Buscar..." runat="server"/>
+                            </div>
+                            <div class="input-group mb-3">
+                                <label for="<%= txtSearchByLastNameInput.ClientID %>">Bucar Por Apellido:</label>
+                                <asp:TextBox ID="txtSearchByLastNameInput" CssClass="form-control" placeholder="Buscar..." runat="server"/>
+                            </div>
+                            <div class="input-group mb-3">
+                                <label for="<%= txtSearchByComercialNameInput.ClientID %>">Bucar Por Nombre Comercial:</label>
+                                <asp:TextBox ID="txtSearchByComercialNameInput" CssClass="form-control" placeholder="Buscar..." runat="server"/>
+                            </div>
+                            <asp:Button ID="btnSearchButton" CssClass="btn btn-primary" Text="Buscar" OnClick="SearchButton_Click" runat="server" />
+                        </asp:Panel>
+                        </div>        
+                    <br />
 
                     <%-- GridView de Proveedores --%>
                     <div class="table-responsive">
@@ -94,7 +116,7 @@
                 </div>
                 <div class="form-group">
                     <label for="<%= TextBoxEmail.ClientID %>">Email:</label>
-                    <asp:TextBox ID="TextBoxEmail" runat="server" CssClass="form-control"></asp:TextBox>
+                    <asp:TextBox ID="TextBoxEmail" runat="server" CssClass="form-control" PlaceHolder="email@dominio.com"></asp:TextBox>
                     <asp:RequiredFieldValidator ID="EmailRequiredField" runat="server" ControlToValidate="TextBoxEmail"
                         ErrorMessage="El Email del Proveedor es requerido." Display="None"></asp:RequiredFieldValidator>
                     <asp:RegularExpressionValidator ID="EmailRequiredRegularExpressionValidator" runat="server" ControlToValidate="TextBoxEmail"
@@ -103,7 +125,7 @@
                 </div>
                 <div class="form-group">
                     <label for="<%= TextBoxSitioWebUrl.ClientID %>">Sitio Web:</label>
-                    <asp:TextBox ID="TextBoxSitioWebUrl" runat="server" CssClass="form-control"></asp:TextBox>                    
+                    <asp:TextBox ID="TextBoxSitioWebUrl" runat="server" CssClass="form-control" PlaceHolder="www.dominio.com"></asp:TextBox>                    
                     <asp:RequiredFieldValidator ID="WebSiteRequiredField" runat="server" ErrorMessage="El Sitio Web del Proveedor es requerido." ControlToValidate="TextBoxSitioWebUrl" Display="None"></asp:RequiredFieldValidator>
                     <asp:RegularExpressionValidator ID="WebSiteRegularExpressionValidator" runat="server" ControlToValidate="TextBoxSitioWebUrl"
                         ValidationExpression="^(http|http(s)?://)?([\w-]+\.)+[\w-]+[.com|.in|.org]+(\[\?%&=]*)?" 
@@ -111,7 +133,7 @@
                 </div>
                 <div class="form-group">
                     <label for="<%= TextBoxTelefono.ClientID %>">Teléfono:</label>
-                    <asp:TextBox ID="TextBoxTelefono" runat="server" CssClass="form-control"></asp:TextBox>
+                    <asp:TextBox ID="TextBoxTelefono" runat="server" CssClass="form-control" PlaceHolder="1122223333"></asp:TextBox>
                     <asp:RequiredFieldValidator ID="TelefonoRequiredField" runat="server" ErrorMessage="El Teléfono del Proveedor es requerido." ControlToValidate="TextBoxTelefono" Display="None"></asp:RequiredFieldValidator>
                     <asp:RegularExpressionValidator ID="RegularExpressionValidator1" runat="server" ControlToValidate="TextBoxTelefono"
                         ValidationExpression="^(?:\+54)?\s?\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4}$" 
@@ -119,12 +141,12 @@
                 </div>
                 <div class="form-group">
                     <label for="<%= TextBoxDate.ClientID %>">Fecha de Nacimiento:</label>
-                    <asp:TextBox runat="server" id="TextBoxDate" />
+                    <asp:TextBox runat="server" id="TextBoxDate" PlaceHolder="dd/mm/yyyy"/>
                     <asp:RangeValidator runat="server" ID="rngDate" ControlToValidate="TextBoxDate" 
                         type="Date" 
                         minimumvalue="01-01-1930" 
                         maximumvalue="31-12-2006" 
-                        ErrorMessage="Por favor ingrese una fecha entre 1930 y 2006, con formato: dd/mm/yyyy, dd-mm-yyyy o dd.mm.yyyy"  Display="None"/>
+                        ErrorMessage="Por favor ingrese una fecha entre 1930 y 2006, con formato: dd/mm/yyyy, dd-mm-yyyy o dd.mm.yyyy" Display="None"/>
                     <asp:RegularExpressionValidator ID="RegularExpressionValidator2" runat="server"  ControlToValidate="TextBoxDate" 
                         ValidationExpression="^(?:(?:31(\/|-|\.)(?:0?[13578]|1[02]))\1|(?:(?:29|30)(\/|-|\.)(?:0?[13-9]|1[0-2])\2))(?:(?:1[6-9]|[2-9]\d)?\d{2})$|^(?:29(\/|-|\.)0?2\3(?:(?:(?:1[6-9]|[2-9]\d)?(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]|[3579][26])00))))$|^(?:0?[1-9]|1\d|2[0-8])(\/|-|\.)(?:(?:0?[1-9])|(?:1[0-2]))\4(?:(?:1[6-9]|[2-9]\d)?\d{2})$"                         
                         ErrorMessage="El formato de fecha es incorrecto o contiene letras" Display="None"></asp:RegularExpressionValidator>

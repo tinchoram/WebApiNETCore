@@ -42,7 +42,7 @@
                 </div>
                 <div class="form-group">
                     <label for="<%= TextBoxEmail.ClientID %>">Email:</label>
-                    <asp:TextBox ID="TextBoxEmail" runat="server" CssClass="form-control"></asp:TextBox>
+                    <asp:TextBox ID="TextBoxEmail" runat="server" CssClass="form-control" PlaceHolder="email@dominio.com"></asp:TextBox>
                     <asp:RequiredFieldValidator ID="EmailRequiredField" runat="server" ControlToValidate="TextBoxEmail"
                         ErrorMessage="El Email del Proveedor es requerido." Display="None"></asp:RequiredFieldValidator>
                     <asp:RegularExpressionValidator ID="EmailRequiredRegularExpressionValidator" runat="server" ControlToValidate="TextBoxEmail"
@@ -51,7 +51,7 @@
                 </div>
                 <div class="form-group">
                     <label for="<%= TextBoxSitioWebUrl.ClientID %>">Sitio Web:</label>
-                    <asp:TextBox ID="TextBoxSitioWebUrl" runat="server" CssClass="form-control"></asp:TextBox>                    
+                    <asp:TextBox ID="TextBoxSitioWebUrl" runat="server" CssClass="form-control" PlaceHolder="www.dominio.com"></asp:TextBox>                    
                     <asp:RequiredFieldValidator ID="WebSiteRequiredField" runat="server" ErrorMessage="El Sitio Web del Proveedor es requerido." ControlToValidate="TextBoxSitioWebUrl" Display="None"></asp:RequiredFieldValidator>
                     <asp:RegularExpressionValidator ID="WebSiteRegularExpressionValidator" runat="server" ControlToValidate="TextBoxSitioWebUrl"
                         ValidationExpression="^(http|http(s)?://)?([\w-]+\.)+[\w-]+[.com|.in|.org]+(\[\?%&=]*)?" 
@@ -59,7 +59,7 @@
                 </div>
                 <div class="form-group">
                     <label for="<%= TextBoxTelefono.ClientID %>">Teléfono:</label>
-                    <asp:TextBox ID="TextBoxTelefono" runat="server" CssClass="form-control"></asp:TextBox>
+                    <asp:TextBox ID="TextBoxTelefono" runat="server" CssClass="form-control" PlaceHolder="1122223333"></asp:TextBox>
                     <asp:RequiredFieldValidator ID="TelefonoRequiredField" runat="server" ErrorMessage="El Teléfono del Proveedor es requerido." ControlToValidate="TextBoxTelefono" Display="None"></asp:RequiredFieldValidator>
                     <asp:RegularExpressionValidator ID="RegularExpressionValidator1" runat="server" ControlToValidate="TextBoxTelefono"
                         ValidationExpression="^(?:\+54)?\s?\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4}$" 
@@ -67,7 +67,7 @@
                 </div>
                 <div class="form-group">
                     <label for="<%= TextBoxDate.ClientID %>">Fecha de Nacimiento:</label>
-                    <asp:TextBox runat="server" id="TextBoxDate" />
+                    <asp:TextBox runat="server" id="TextBoxDate" PlaceHolder="dd/mm/yyyy" />
                     <asp:RangeValidator runat="server" ID="rngDate" ControlToValidate="TextBoxDate" 
                         type="Date" 
                         minimumvalue="01-01-1930" 

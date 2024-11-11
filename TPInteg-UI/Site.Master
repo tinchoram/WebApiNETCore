@@ -285,6 +285,14 @@
         .shadow-sm { box-shadow: 0 2px 4px rgba(0,0,0,0.05) !important; }
         .shadow { box-shadow: 0 4px 6px rgba(0,0,0,0.1) !important; }
         .shadow-lg { box-shadow: 0 8px 16px rgba(0,0,0,0.1) !important; }
+
+        .table-members{
+            width: 80%;
+        }
+
+        .table-members th{
+            text-align: left;
+        }
     </style>
     <asp:ContentPlaceHolder ID="HeadContent" runat="server" />
 </head>

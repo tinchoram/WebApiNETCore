@@ -15,6 +15,51 @@ namespace TPInteg_UI.Pages
     {
 
         /// <summary>
+        /// FiltrosPanel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel FiltrosPanel;
+
+        /// <summary>
+        /// txtSearchByNameInput control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtSearchByNameInput;
+
+        /// <summary>
+        /// txtSearchByLastNameInput control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtSearchByLastNameInput;
+
+        /// <summary>
+        /// txtSearchByComercialNameInput control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtSearchByComercialNameInput;
+
+        /// <summary>
+        /// btnSearchButton control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnSearchButton;
+
+        /// <summary>
         /// NombreRequiredField control.
         /// </summary>
         /// <remarks>
