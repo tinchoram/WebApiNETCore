@@ -167,6 +167,9 @@
         .table tbody tr:hover {
             background-color: #f8f9fa;
         }
+        .table tr:nth-child(even) {
+          background-color: #dee8f5;
+        }
 
         /* Estado badges */
         .estado-badge {

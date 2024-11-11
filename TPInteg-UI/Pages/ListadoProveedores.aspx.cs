@@ -283,9 +283,9 @@ namespace TPInteg_UI.Pages
                 }
                 else
                 {
-                    string nombreValue = txtSearchByNameInput.Text;
-                    string apellidoValue = txtSearchByLastNameInput.Text;
-                    string nombreComercialValue = txtSearchByComercialNameInput.Text;
+                    string nombreValue = txtSearchByNameInput.Text.ToLower();
+                    string apellidoValue = txtSearchByLastNameInput.Text.ToLower();
+                    string nombreComercialValue = txtSearchByComercialNameInput.Text.ToLower();
 
                     if (string.IsNullOrEmpty(nombreValue) && 
                         string.IsNullOrEmpty(apellidoValue) && 
@@ -308,6 +308,13 @@ namespace TPInteg_UI.Pages
                 ShowError(true, "Ha ocurrido un error inesperado. Por favor, intente nuevamente más tarde.");
                 System.Diagnostics.Debug.WriteLine($"Error: {ex.Message}");
             }
+        }
+        protected async void LimpiarFiltros_Click(object sender, EventArgs e) 
+        {
+            txtSearchByNameInput.Text = string.Empty;
+            txtSearchByLastNameInput.Text = string.Empty;
+            txtSearchByComercialNameInput.Text = string.Empty;
+            RegisterAsyncTask(new PageAsyncTask(LoadProveedoresAsync));
         }
     }
 }
