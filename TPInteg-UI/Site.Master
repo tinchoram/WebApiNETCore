@@ -308,31 +308,19 @@
                             <i class="fas fa-home"></i>Home
                         </a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href='<%: ResolveUrl("~/Pages/ABMProveedores.aspx") %>'>
-                            <i class="fas fa-users"></i>ABM Proveedores
-                        </a>
-                    </li>
+                    
                     <li class="nav-item">
                         <a class="nav-link" href='<%: ResolveUrl("~/Pages/ListadoProveedores.aspx") %>'>
                             <i class="fas fa-list"></i>Listado Proveedores
                         </a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href='<%: ResolveUrl("~/Pages/ABMProductos.aspx") %>'>
-                            <i class="fas fa-box"></i>ABM Productos
-                        </a>
-                    </li>
+                    
                     <li class="nav-item">
                         <a class="nav-link" href='<%: ResolveUrl("~/Pages/ListadoProductos.aspx") %>'>
                             <i class="fas fa-boxes"></i>Listado Productos
                         </a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href='<%: ResolveUrl("~/Pages/ABMLocalidades.aspx") %>'>
-                            <i class="fas fa-map-marker-alt"></i>ABM Localidades
-                        </a>
-                    </li>
+                    
                     <li class="nav-item">
                         <a class="nav-link" href='<%: ResolveUrl("~/Pages/ListadoLocalidades.aspx") %>'>
                             <i class="fas fa-list"></i>Listado Localidades

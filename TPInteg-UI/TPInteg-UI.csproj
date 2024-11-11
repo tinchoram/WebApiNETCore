@@ -151,11 +151,9 @@
     <Content Include="Default.aspx" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
-    <Content Include="Pages\ABMLocalidades.aspx" />
-    <Content Include="Pages\ABMProductos.aspx" />
-    <Content Include="Pages\ABMProveedores.aspx" />
     <Content Include="Pages\Contact.aspx" />
     <Content Include="Pages\EditarLocalidad.aspx" />
+    <Content Include="Pages\EditarProducto.aspx" />
     <Content Include="Pages\EditarProveedor.aspx" />
     <Content Include="Pages\ListadoLocalidades.aspx" />
     <Content Include="Pages\ListadoProductos.aspx" />
@@ -259,27 +257,6 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Pages\ABMLocalidades.aspx.cs">
-      <DependentUpon>ABMLocalidades.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Pages\ABMLocalidades.aspx.designer.cs">
-      <DependentUpon>ABMLocalidades.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Pages\ABMProductos.aspx.cs">
-      <DependentUpon>ABMProductos.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Pages\ABMProductos.aspx.designer.cs">
-      <DependentUpon>ABMProductos.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Pages\ABMProveedores.aspx.cs">
-      <DependentUpon>ABMProveedores.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Pages\ABMProveedores.aspx.designer.cs">
-      <DependentUpon>ABMProveedores.aspx</DependentUpon>
-    </Compile>
     <Compile Include="Pages\Contact.aspx.cs">
       <DependentUpon>Contact.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -293,6 +270,13 @@
     </Compile>
     <Compile Include="Pages\EditarLocalidad.aspx.designer.cs">
       <DependentUpon>EditarLocalidad.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\EditarProducto.aspx.cs">
+      <DependentUpon>EditarProducto.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\EditarProducto.aspx.designer.cs">
+      <DependentUpon>EditarProducto.aspx</DependentUpon>
     </Compile>
     <Compile Include="Pages\EditarProveedor.aspx.cs">
       <DependentUpon>EditarProveedor.aspx</DependentUpon>
